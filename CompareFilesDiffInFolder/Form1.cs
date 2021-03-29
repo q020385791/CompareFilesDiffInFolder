@@ -22,24 +22,20 @@ namespace CompareFilesDiffInFolder
         {
             txtLog.Text = "";
             string SourcePath = labSource.Text;
-            string TargetPath =labTarget.Text;
+            string TargetPath = labTarget.Text;
             DirectoryInfo dirSource = new DirectoryInfo(SourcePath);
             DirectoryInfo dirTarget = new DirectoryInfo(TargetPath);
             //取得目錄底下所有資料夾
-            DirectoryInfo[] SubDir= dirSource.GetDirectories("*",SearchOption.AllDirectories);
+            DirectoryInfo[] SubDir = dirSource.GetDirectories("*", SearchOption.AllDirectories);
 
             foreach (var Dir in SubDir)
             {
                 string TargetDir = Dir.FullName.Replace(SourcePath, TargetPath);
                 if (!Directory.Exists(TargetDir))
                 {
-                    txtLog.Text += "目標資料夾不存在：" + TargetDir+Environment.NewLine;
+                    txtLog.Text += "目標資料夾不存在：" + TargetDir + Environment.NewLine;
                 }
-
                 IEnumerable<FileInfo> ListSource = Dir.GetFiles("*.*", SearchOption.TopDirectoryOnly);
-
-                FileCompare MyFileCompare = new FileCompare();
-
                 //取出所有Source檔案路徑
                 foreach (var F in ListSource)
                 {
@@ -63,25 +59,16 @@ namespace CompareFilesDiffInFolder
                                 txtLog.Text += "檔案不同步：" + NewFile.FullName + Environment.NewLine;
                             }
                         }
-
-
                     }
-
                 }
             }
-       
-
-          
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void btnSetSourceFolder_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog()==DialogResult.OK)
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 labSource.Text = folderBrowserDialog1.SelectedPath;
             }
@@ -119,26 +106,5 @@ namespace CompareFilesDiffInFolder
         }
 
 
-        public void CheckSameFiles(IEnumerable<FileInfo> QueryCommonFiles, IEnumerable<FileInfo> ListTarget, FileCompare MyFileCompare) 
-        {
-            foreach (var ItemSource in QueryCommonFiles)
-            {
-                //用來源名稱取得目標名稱
-                var ItemTarget = ListTarget.Select(x => x).Where(y => y.Name == ItemSource.Name).FirstOrDefault();
-
-                //察看檔案是否相同
-                bool IFSameFile = MyFileCompare.CheckInfo(ItemSource, ItemTarget);
-                if (IFSameFile)
-                {
-                    //目前檔案若相同則不動作
-                    txtLog.Text +="檔案相同：" + ItemTarget.FullName + Environment.NewLine;
-                }
-                else
-                {
-                    txtLog.Text += "檔案不同步：" + ItemTarget.FullName + Environment.NewLine;
-                }
-            }
-
-        }
     }
 }
