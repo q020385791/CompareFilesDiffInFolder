@@ -29,7 +29,7 @@ namespace CompareFilesDiffInFolder
                 DirectoryInfo dirTarget = new DirectoryInfo(TargetPath);
                 //取得目錄底下所有資料夾
                 DirectoryInfo[] SubDir = dirSource.GetDirectories("*", SearchOption.AllDirectories);
-                //如果該目錄有資料夾
+                //如果該目錄有子資料夾
                 if (SubDir.Count() > 0)
                 {
                     foreach (var Dir in SubDir)
