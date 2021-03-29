@@ -74,7 +74,7 @@ namespace CompareFilesDiffInFolder
                                 catch (Exception ex)
                                 {
 
-                                    txtLog.Text += "錯誤：" + ex.InnerException;
+                                    txtLog.Text += "錯誤：" + ex.InnerException + Environment.NewLine;
                                 }
 
                             }
@@ -104,33 +104,21 @@ namespace CompareFilesDiffInFolder
                                 {
                                     txtLog.Text += "檔案不同步：" + NewFile.FullName + Environment.NewLine;
                                 }
-
                             }
                         }
                         else 
                         {
                             txtLog.Text += "目標檔案不存在：" + thisTargetPath + Environment.NewLine;
-
                         }
-
                     }
-
-
-
-
+                    txtLog.Text += "比對完畢";
                 }
-
-              
             }
             catch (Exception ex)
             {
-
                 txtLog.Text+=ex.InnerException;
             }
-           
         }
-
-
 
         private void btnSetSourceFolder_Click(object sender, EventArgs e)
         {
